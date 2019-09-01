@@ -1,0 +1,96 @@
+npm install -g gatsby@2.4.17
+
+gatsby new gatsby-bootcamp https://github.com/gatsbyjs/gatsby-starter-hello-world
+
+
+
+there are 6 default scripts and 
+development script -> for starting development server and live reload 
+
+gatsby-plugin-sass - plugin for sass
+npm install gatsby-plugin-sass node-sass
+npm run develop
+
+graphiQl
+http://localhost:8000/___graphql
+
+
+now we have alos graphqlplaygorund that gatsby supports
+
+we need to set up the environment varaible on our machine for graphqlplay-ground to work
+
+we can set it inot the package.json (script section) file -prolem-> it's not cross os compitable, so we will create seperate file for 
+setting env varaible which is very common approch.
+
+root of the project .env.development -> key = value
+
+GATSBY_GRAPHQL_IDE = playgorund -this will give us new tool in browser
+
+only thing we need to do load this file in when we using development server -> to do that we use very popular env cmd npm package
+
+npm install --save-dev env-cmd
+
+after this we need to change develop script it's gone use env-cmd to load that env variable file in then it will run gatsby develop
+
+"develop" : "env-cmd .env.development gatsby develop"
+
+source-filesystem -> gatsby-source-filesystem -> link : https://www.gatsbyjs.org/packages/gatsby-source-filesystem/?=source-filesystem
+this plugin allow us to pull those mark-down file to gatsby then we will use another pulugin to convert mark down to the html
+
+we need to update config(gatsby-config)
+
+{
+      resolve: "gatsby-source-filesystem",
+      options: {
+        name: 'src',
+        path:`${__dirname}/src/`
+      }
+},
+
+run again npm run develop and you will find two more function of graphql 
+1.file ->
+2.allFile -> 
+
+query{
+  allFile{
+    edges{
+      node{
+        name
+        extension
+        dir
+      }
+    }
+  }
+}
+
+run this query in browser graphiQl editor you will get all the file which resides in src folder
+
+-->
+
+what we want ?
+
+we need to render data from .md file (transform markdown file into html);
+
+so our target is to fetch only markdown file and parse that mark down file into the content that is useful
+
+for that we need another plugin that pairs wth gatsby source filesystem plugin
+
+new plugin is going to look for markdown files in their and parse them inot usefull data
+
+plugin name -> gatsby-transformer-remark -> npm install gatsby-transformer-remark@2.3.8
+
+remark is a stand alone javascript library for parsing markdown files -> this plugin run the (remark library) behind the seen
+
+add new item into plugin array in config file {
+    gatsby-transformer-remark
+}
+
+
+run again npm run develop and you will find two more function of graphql 
+1.markdownRemarks - fetching individual post
+2.allMarkdownRemarks- fetchiing all posts
+
+-- now please refere description-blog.txt file and after finish that resume from here
+
+
+

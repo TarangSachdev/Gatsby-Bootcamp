@@ -1,0 +1,34 @@
+create contentfull account
+
+click on explore content modeling
+
+example project is created
+
+exlore the example project
+
+from the menu we will create space(click)
+
+
+add content model called
+give it a name 'Blog'
+add fields
+'title' ->text
+'Slug' ->text
+'publshed date' ->date time
+'body' ->rich text
+
+now ceate blog post -> save the model 
+now add content => publshed it 
+
+-> now we need to install another plugin called "gatsby-source-contentful" from the gatsby plugins
+
+npm install gatsby-source-contentful;
+
+in config file
+{
+      resolve:'gatsby-source-contentful',
+      options:{
+        spaceId:process.env.CONTENTFUL_SPACE_ID,
+        accessToken:process.env.CONTENTFUL_ACCESS_TOKEN,
+      }
+},

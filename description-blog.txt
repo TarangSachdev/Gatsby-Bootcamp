@@ -1,0 +1,96 @@
+internal gatsby api  that can be a confusing
+
+GOAL 1 - Generate a slug for each post
+
+slug is nothing more then filenames store as a string 
+                |                Y
+gatsby.md -> gatsby -> /gatsby or /blog/gatsby
+
+GOAL 2 - Generate the blog post page template => that is nothing more than a react component
+
+GOAL 3 - Genereate a new page for each post (combine two)
+
+we will create one file in root of the project
+=================================================================================================================================
+GOAL 1 - Generate a slug for each post
+
+gatsby-node.js -> this is the configuration file which allow us to tap in to lot of the node api that gatsby expose
+
+const path = require("path")
+
+module.exports.onCreateNode = ({ node, actions }) => {
+  const { createNodeField } = actions
+  //   console.log(node)
+
+  if (node.internal.type === "MarkdownRemark") {
+    const slug = path.basename(node.fileAbsolutePath, ".md")
+
+    // console.log('@@@@@@@@@@@@@@@@@@@@@@',slug)
+    // console.log(JSON.stringify(node, undefined, 4))
+    
+    // adding a slug on markdown nodes done
+    createNodeField({
+      node,
+      name: "slug",
+      value: slug,
+    })
+
+    // adding a slug on markdown nodes done
+  }
+}
+=================================================================================================================================
+
+GOAL 2 - Generate the blog post page template => that is nothing more than a react component
+
+cerate new folder in src folder called "template" =>  reason for creating new folder is that we want to differtiate the react component 
+we are about to create from the standard component from the components directive or the specilize component of the pages folder
+
+so create one compoent called blog.js in internal
+=================================================================================================================================
+
+GOAL 3 - Genereate a new page for each post (combine two)
+
+that's gone require us to use a another api from inside of the gatsby-node.js config file 
+
+->
+gatsby node api -> createPages;
+exports.createPages = ({graphql,actions})=>{
+    graphql -> help us to fetch some data;
+    actions -> we get access to action for creating a new page
+}
+
+so update gatsby-node.js file
+
+and run and add links to that slug into pages/blog.js file 
+
+how  we can configure graphql dynamic query ->
+
+->  dynamic graphql query -> accept slug and in result give us the data for the assoicate blog post ->
+->  in template file we have access to the slug and we can not have static query -> we need to generae dyanmic query with use of slug?
+
+-> to get this done -> we do code in template/blog.js
+
+
+now for inserting images for blog we need to install and configure 3 new gatsby plugin
+
+
+setting ![Tarang](./Tarang-01.jpg) will not work -> it display only 'Tarang'(alt)
+beacuse gatsby does not know from where we are trying to fetch the image from;
+for giving support this sort of syntax 
+
+1.gatsby-plugin-sharp -> this plugin allow us to use inside our gatsby site
+sharp lib provides all sort of tools for working with and processes images and it's a depenedacy of the other plugin we are going to use
+2.gatsby-remark-images -> allow us to use images inside our markdown posts when they process with remarks 
+3.gatsby-remark-relative-images -> allow us to source images relative to markdown file -> in our case ![Tarang](./Tarang-01.jpg) will going to work.
+
+npm install gatsby-plugin-sharp@2.0.32 gatsby-remark-images@3.0.10 gatsby-remark-relative-images@0.2.2
+
+
+we need to make big changes into the gatsby-config file 
+
+1. set up sharp-plugin -> before tranform-plugin => no need to configure for now
+2. gatsby-remark-images and gatsby-remark-relative-images
+    => both plugin are remarks specific -> both of those actully get configured in the options object for 'gatsby-tranformer-remark'
+    that means we need to remove it from just beign a string and switch it over to being a object and resolve :"same plugin value";
+    
+
