@@ -32,3 +32,21 @@ in config file
         accessToken:process.env.CONTENTFUL_ACCESS_TOKEN,
       }
 },
+
+after npm run develop => we can find new six(6) queries
+1.contentfulContentType
+2.allContentfulContentType
+3,4,5,6
+
+
+change in query (create new file blog-contentful)
+
+will need to change up the node.js file so -> rename it to gatsby-node-01.js and 
+make new file gatsby-node.js
+
+we need to install 
+npm i @contentful/rich-text-react-renderer;
+
+
+
+

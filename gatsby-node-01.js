@@ -1,12 +1,8 @@
 const path = require("path")
+const path = require("path")
 
 
-// on careteNode is use to generate slugs for our post -> but in contentful we set the fields slug so no need for that now :-)
-// so we can remove this method
 // to generate slug 
-
-// you can renomve onCreateNode methods if you only want to generate blog fron the contentful
-
 module.exports.onCreateNode = ({ node, actions }) => {
   const { createNodeField } = actions
   //   console.log(node)
@@ -28,8 +24,10 @@ module.exports.onCreateNode = ({ node, actions }) => {
 
 module.exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
-  const blogTemplate = path.resolve("./src/templates/blog.js") // resolve funciton create absolute path from the root of the harddrive
 
+  // current location in the gatsby-bootcamp folder to the destination which is blog.js
+  // 1.get path to template
+  const blogTemplate = path.resolve("./src/templates/blog.js") // resolve funciton create absolute path from the root of the harddrive
 
   // 2.get markdown data
   const response = await graphql(`
@@ -47,27 +45,6 @@ module.exports.createPages = async ({ graphql, actions }) => {
   `)
   response.data.allMarkdownRemark.edges.forEach(edge => {
     const slug = edge.node.fields.slug;
-    createPage({
-      component: blogTemplate,
-      path: `/blog/${slug}`,
-      context: { slug },
-    })
-  })
-
-  const response_c = await graphql(`
-    query {
-      allContentfulBlogPost{
-        edges{
-          node{
-            slug
-          }
-        }
-      }
-    }
-  `)
-  
-  response_c.data.allContentfulBlogPost.edges.forEach(edge => {
-    const slug = edge.node.slug;
     createPage({
       component: blogTemplate,
       path: `/blog/${slug}`,
