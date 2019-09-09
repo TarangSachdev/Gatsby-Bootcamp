@@ -16,9 +16,9 @@ const IndexPage = () => {
         <h2>
           I'm Tarang, a full-stack developer living in beautiful Gandhinagar
         </h2>
-        <p>
+        {/* <p>
           Need a developer? <Link to="/contact">Contact me.</Link>
-        </p>
+        </p> */}
       </Layout>
     </div>
   )
