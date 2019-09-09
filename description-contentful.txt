@@ -49,4 +49,11 @@ npm i @contentful/rich-text-react-renderer;
 
 
 
+customize head of our document 
+for setting up page title -> 
 
+for that react libray -> helmet
+
+gatsby-plugin => gatsby-plugin-react-helmet@3.0.12 react-helmet@5.2.0
+
+add 'gatsby-plugin-react-helmet' in plugin array of gatsby-config.js
